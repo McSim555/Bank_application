@@ -1,14 +1,16 @@
+from src.masks import get_mask_account, get_mask_card_number
+
+
 def mask_account_card(card_or_account_number: str) -> str:
     """Функция принимает название и номер карты или номер счета и возвращает в замаскированном виде"""
-    from src import masks
 
     if "Счет" in card_or_account_number:  # Проверка введен счет или карта
         # Формирование замаскированного вывода для счета:
-        masked_account = "Счет " + masks.get_mask_account(int(card_or_account_number[5:]))
+        masked_account = "Счет " + get_mask_account(int(card_or_account_number[5:]))
         return masked_account
     else:
         # Формирование замаскированного вывода для карты:
-        masked_card = card_or_account_number[:-16] + masks.get_mask_card_number(int(card_or_account_number[-16:]))
+        masked_card = card_or_account_number[:-16] + get_mask_card_number(int(card_or_account_number[-16:]))
         return masked_card
 
 
