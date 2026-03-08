@@ -7,15 +7,15 @@ def test_card_number_full():
 
 
 @pytest.fixture
-def test_card_number_short():
+def test_number_short():
     return "736541084301358"
 
 @pytest.fixture
-def test_card_number_empty():
+def test_number_empty():
     return ""
 
 @pytest.fixture
-def test_card_number_letters():
+def test_number_letters():
     return "rterretrertyerty"
 
 
