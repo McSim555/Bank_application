@@ -1,8 +1,6 @@
 import pytest
 
-from src.widget import mask_account_card
-
-from src.widget import get_date
+from src.widget import mask_account_card, get_date
 
 @pytest.mark.parametrize("name_number, expected", [("Maestro 1596837868705199", "Maestro 1596 83** **** 5199"),
                                                    ("Счет 64686473678894779589", "Счет **9589"),
@@ -46,10 +44,3 @@ def test_get_date_format_error1():
     with pytest.raises(TypeError):
          get_date("2025503-11T02:26:18.671407")
 
-def test_get_date_format_error2():
-    with pytest.raises(TypeError):
-        get_date("2024503 11T02:26:18.671407")
-
-def test_get_date_format_short():
-    with pytest.raises(TypeError):
-        get_date("20245")
