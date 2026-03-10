@@ -24,5 +24,3 @@ def get_mask_account(account_number: str) -> str:
             raise ValueError(error_message)
     else:
         raise TypeError(error_message)
-
-#print(get_mask_account("1234123412341234123"))
