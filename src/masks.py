@@ -1,12 +1,26 @@
-def get_mask_card_number(card_number: int) -> str:
-    """Функция принмае нв вход номер карты и возвращает маску."""
-    str_card_number = str(card_number)  # Перевод номера карты в строку
-    mask_card_number = str_card_number[:4] + " " + str_card_number[4:6] + "** **** " + str_card_number[-4:]
-    return mask_card_number
+def get_mask_card_number(card_number: str) -> str:
+    """Функция принмает нв вход номер карты и возвращает маску."""
+
+    error_message = "Номер карты должен состоять из 16 цифр"
+    if card_number.isdigit():
+        if len(card_number) == 16:
+            mask_card_number = card_number[:4] + " " + card_number[4:6] + "** **** " + card_number[-4:]
+            return mask_card_number
+        else:
+            raise ValueError(error_message)
+    else:
+        raise TypeError(error_message)
 
 
-def get_mask_account(account_number: int) -> str:
+def get_mask_account(account_number: str) -> str:
     """Функция принимает на вход номер счета и возвращает его маску"""
-    str_account_number = str(account_number)  # Первод номера счета в строку
-    mask_account_number = "**" + str_account_number[-4:]
-    return mask_account_number
+
+    error_message = "Номер счета должен состоять из 20 цифр"
+    if account_number.isdigit():
+        if len(account_number) == 20:
+            mask_account_number = "**" + account_number[-4:]
+            return mask_account_number
+        else:
+            raise ValueError(error_message)
+    else:
+        raise TypeError(error_message)
