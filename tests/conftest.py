@@ -50,7 +50,7 @@ def test_set_same_date():
     ]
 
 @pytest.fixture
-def test_set_filter_by_currency():
+def test_set_filter_by_currency_transactions():
     return ([
         {
             "id": 939719570,
