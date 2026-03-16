@@ -1,7 +1,7 @@
 from typing import Generator
 
 
-def filter_by_currency(transactions: list, currency_default: str ="USD") -> filter:
+def filter_by_currency(transactions: list, currency_default: str = "USD") -> filter:
     """Функция фильтрует транзакции по валюте"""
 
     i = 0
@@ -37,9 +37,9 @@ def transaction_descriptions(transactions: list) -> Generator[str]:
                 raise KeyError("Отсутствует описание в введенных операциях или на входе пустые данные")
     else:
         raise ValueError("Отсутствуют данные на входе")
-    transaction_description = (tr["description"] for tr in transactions)
 
-    return transaction_description
+    for tr in transactions:
+        yield tr["description"]
 
 
 def card_number_generator(start_card_number: str, end_card_number: str) -> Generator[str]:

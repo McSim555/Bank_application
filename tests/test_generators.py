@@ -112,16 +112,8 @@ def test_filter_by_currency_none():
 
 
 def test_transactions_description(test_set_filter_by_currency_transactions):
-    expected_result = [
-        "Перевод организации",
-        "Перевод со счета на счет",
-        "Перевод со счета на счет",
-        "Перевод с карты на карту",
-        "Перевод организации",
-    ]
-    result = []
-    for _ in range(5):
-        result = list(transaction_descriptions(test_set_filter_by_currency_transactions))
+    expected_result = "Перевод организации"
+    result = next(transaction_descriptions(test_set_filter_by_currency_transactions))
     assert expected_result == result
 
 
@@ -182,13 +174,35 @@ def test_transaction_description_new(start, expected):
 
 def test_transactions_description_none():
     with pytest.raises(KeyError):
-        transaction_descriptions(([{}]))
+        list(transaction_descriptions(([{}])))
 
 
 def test_transactions_description_no_description_key():
     with pytest.raises(KeyError):
-        transaction_descriptions(
-            (
+        list(
+            transaction_descriptions(
+                (
+                    (
+                        [
+                            {
+                                "id": 939719570,
+                                "state": "EXECUTED",
+                                "date": "2018-06-30T02:08:58.425572",
+                                "operationAmount": {"amount": "9824.07", "currency": {"name": "USD", "code": "USD"}},
+                                "from": "Счет 75106830613657916952",
+                                "to": "Счет 11776614605963066702",
+                            }
+                        ]
+                    )
+                )
+            )
+        )
+
+
+def test_transaction_descriptions_description_empty():
+    with pytest.raises(KeyError):
+        list(
+            transaction_descriptions(
                 (
                     [
                         {
@@ -196,6 +210,7 @@ def test_transactions_description_no_description_key():
                             "state": "EXECUTED",
                             "date": "2018-06-30T02:08:58.425572",
                             "operationAmount": {"amount": "9824.07", "currency": {"name": "USD", "code": "USD"}},
+                            "description": "",
                             "from": "Счет 75106830613657916952",
                             "to": "Счет 11776614605963066702",
                         }
@@ -205,28 +220,9 @@ def test_transactions_description_no_description_key():
         )
 
 
-def test_transaction_descriptions_description_empty():
-    with pytest.raises(KeyError):
-        transaction_descriptions(
-            (
-                [
-                    {
-                        "id": 939719570,
-                        "state": "EXECUTED",
-                        "date": "2018-06-30T02:08:58.425572",
-                        "operationAmount": {"amount": "9824.07", "currency": {"name": "USD", "code": "USD"}},
-                        "description": "",
-                        "from": "Счет 75106830613657916952",
-                        "to": "Счет 11776614605963066702",
-                    }
-                ]
-            )
-        )
-
-
 def test_transaction_descriptions_description_no_data():
     with pytest.raises(ValueError):
-        transaction_descriptions([])
+        list(transaction_descriptions([]))
 
 
 def test_card_number_generator():
