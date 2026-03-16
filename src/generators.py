@@ -1,7 +1,7 @@
 from typing import Generator
 
 
-def filter_by_currency(transactions: list, currency_default="USD") -> filter:
+def filter_by_currency(transactions: list, currency_default: str ="USD") -> filter:
     """Функция фильтрует транзакции по валюте"""
 
     i = 0
@@ -46,22 +46,22 @@ def card_number_generator(start_card_number: str, end_card_number: str) -> Gener
     """Генератор, который выдает номера банковских карт в формате XXXX XXXX XXXX XXXX"""
 
     if start_card_number == "" or end_card_number == "":
-        raise ValueError('Не указаны начало и/или конец диапазона')
+        raise ValueError("Не указаны начало и/или конец диапазона")
 
-    if len(start_card_number) > 16 or len(end_card_number) >16:
-        raise ValueError('Максимальное количество цифр в номере карты 16')
+    if len(start_card_number) > 16 or len(end_card_number) > 16:
+        raise ValueError("Максимальное количество цифр в номере карты 16")
 
     if start_card_number.isdigit() and end_card_number.isdigit():
-        start_card_number = int(start_card_number)
-        end_card_number = int(end_card_number)
+        start_card_number_new = int(start_card_number)
+        end_card_number_new = int(end_card_number)
     else:
-        raise TypeError('Неверный формат цифр диапазона')
+        raise TypeError("Неверный формат цифр диапазона")
 
-    if start_card_number > end_card_number:
+    if start_card_number_new > end_card_number_new:
         raise ValueError("Начальный номер карты больше конечного номера")
     else:
-        i = start_card_number
-        while i <= end_card_number:
+        i = start_card_number_new
+        while i <= end_card_number_new:
             card_number = i
             card_number_str = str(card_number).zfill(16)
             card_number_final = (
