@@ -1,32 +1,29 @@
-import time
+import os
 
-def log(filename=''):
+
+def log(filename=""):  # При выводе в файл указать имя файла в формате .txt
+    """Декоратор выводит в консоль или записывает в файл .txt логи работы функции"""
+
     def my_decorator(func):
-        def wrapper(*args, **kwargs):
+        def wrapper(*args, **kwargs) -> None:
             try:
-                start_time = time.ctime(int(time.time()))
                 result = func(*args, **kwargs)
-                end_time = time.ctime(int(time.time()))
-                if filename == '':
-                    print(f'{func} result OK: {result}')
-                elif filename == 'mylog.txt':
-                    with open(filename, 'a') as file:
-                        file.write(f'\n{func} result OK: {result}')
+                if filename == "":
+                    print(f"{func.__name__} result OK: {result}")
+                elif os.path.splitext(filename)[1] == ".txt":
+                    with open(filename, "a") as file:
+                        file.write(f"\n{func.__name__} result OK: {result}")
                 else:
-                    raise ValueError('Имя файла указано неверно')
+                    raise ValueError("Имя файла указано неверно")
             except Exception as e:
-                if filename == '':
-                    print(f'{func} error: ({e}). Inputs {args}, {kwargs} ')
-                elif filename == 'mylog.txt':
-                    with open(filename, 'a') as file:
-                        file.write(f'\n{func} error: ({e}). Inputs {args}, {kwargs} ')
+                if filename == "":
+                    print(f"{func.__name__} error: ({e}). Inputs {args}, {kwargs}")
+                elif os.path.splitext(filename)[1] == ".txt":
+                    with open(filename, "a") as file:
+                        file.write(f"\n{func.__name__} error: ({e}). Inputs {args}, {kwargs}")
                 else:
-                    raise ValueError('Имя файла указано неверно')
+                    raise ValueError("Имя файла указано неверно")
+
         return wrapper
+
     return my_decorator
-
-@log(filename="mylog.txt")
-def my_function(x, y):
-    return x/y
-
-my_function(4, 1)
