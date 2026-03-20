@@ -10,7 +10,7 @@ def test_log_consol(capsys):
 
     my_function(4, 1)
     captured = capsys.readouterr()
-    assert captured.out == "my_function result OK: 5\n"
+    assert captured.out == "my_function ok\n"
 
 
 def test_log_txtfile():
@@ -21,7 +21,7 @@ def test_log_txtfile():
     my_function(4, 1)
     with open("test_mylog.txt", "r") as file:
         content = file.read()
-        assert content == "\nmy_function result OK: 5"
+        assert content == "\nmy_function ok"
     with open("test_mylog.txt", "w") as file:
         file.write("")
 
@@ -40,9 +40,10 @@ def test_log_error_consol(capsys):
     def my_function(x, y):
         return x / y
 
-    my_function(4, 0)
-    captured = capsys.readouterr()
-    assert captured.out == "my_function error: (division by zero). Inputs (4, 0), {}\n"
+    with pytest.raises(ZeroDivisionError):
+        my_function(4, 0)
+        captured = capsys.readouterr()
+        assert captured.out == "my_function error: (division by zero). Inputs (4, 0), {}\n"
 
 
 def test_log_error_txtfile():
@@ -50,10 +51,11 @@ def test_log_error_txtfile():
     def my_function(x, y):
         return x / y
 
-    my_function(4, 0)
-    with open("test_mylog.txt", "r") as file:
-        content = file.read()
-        assert content == "\nmy_function error: (division by zero). Inputs (4, 0), {}"
+    with pytest.raises(ZeroDivisionError):
+        my_function(4, 0)
+        with open("test_mylog.txt", "r") as file:
+            content = file.read()
+            assert content == "\nmy_function error: (division by zero). Inputs (4, 0), {}"
     with open("test_mylog.txt", "w") as file:
         file.write("")
 

@@ -7,12 +7,12 @@ def log(filename=""):  # При выводе в файл указать имя �
     def my_decorator(func):
         def wrapper(*args, **kwargs) -> None:
             try:
-                result = func(*args, **kwargs)
+                func(*args, **kwargs)
                 if filename == "":
-                    print(f"{func.__name__} result OK: {result}")
+                    print(f"{func.__name__} ok")
                 elif os.path.splitext(filename)[1] == ".txt":
                     with open(filename, "a") as file:
-                        file.write(f"\n{func.__name__} result OK: {result}")
+                        file.write(f"\n{func.__name__} ok")
                 else:
                     raise ValueError("Имя файла указано неверно")
             except Exception as e:
@@ -23,6 +23,7 @@ def log(filename=""):  # При выводе в файл указать имя �
                         file.write(f"\n{func.__name__} error: ({e}). Inputs {args}, {kwargs}")
                 else:
                     raise ValueError("Имя файла указано неверно")
+                raise
 
         return wrapper
 
