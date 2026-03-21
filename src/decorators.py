@@ -5,9 +5,9 @@ def log(filename=""):  # При выводе в файл указать имя �
     """Декоратор выводит в консоль или записывает в файл .txt логи работы функции"""
 
     def my_decorator(func):
-        def wrapper(*args, **kwargs) -> None:
+        def wrapper(*args, **kwargs):
             try:
-                func(*args, **kwargs)
+                result = func(*args, **kwargs)
                 if filename == "":
                     print(f"{func.__name__} ok")
                 elif os.path.splitext(filename)[1] == ".txt":
@@ -15,6 +15,7 @@ def log(filename=""):  # При выводе в файл указать имя �
                         file.write(f"\n{func.__name__} ok")
                 else:
                     raise ValueError("Имя файла указано неверно")
+                return result
             except Exception as e:
                 if filename == "":
                     print(f"{func.__name__} error: ({e}). Inputs {args}, {kwargs}")

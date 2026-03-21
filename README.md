@@ -258,10 +258,10 @@ Code coverage:
 Name                Stmts   Miss  Cover
 ---------------------------------------
 src\__init__.py         0      0   100%
-src\decorators.py      22      0   100%
+src\decorators.py      23      0   100%
 src\generators.py      39      0   100%
 src\masks.py           16      0   100%
 src\processing.py      19      0   100%
 src\widget.py          22      0   100%
 ---------------------------------------
-TOTAL                 118      0   100%
+TOTAL                 119      0   100%
