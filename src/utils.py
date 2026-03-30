@@ -14,7 +14,3 @@ def financial_transactions(path_source: str) -> list[dict]:
 
     except Exception:
         return []
-
-
-# p = r"C:\Users\79161\Documents\Skypro\Python_projects\bank_application\data\operations.json"
-# print(financial_transactions(p))

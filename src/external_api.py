@@ -32,15 +32,3 @@ def conversion_to_rub(transaction: dict) -> float:
     else:
         raise ValueError("Конвертация такой валюты не предусмотрена")
 
-
-transaction = {
-    "id": 716496732,
-    "state": "EXECUTED",
-    "date": "2018-04-04T17:33:34.701093",
-    "operationAmount": {"amount": "40701.91", "currency": {"name": "EUR", "code": "EUR"}},
-    "description": "Перевод организации",
-    "from": "Visa Gold 5999414228426353",
-    "to": "Счет 72731966109147704472",
-}
-r = conversion_to_rub(transaction)
-print(r)
