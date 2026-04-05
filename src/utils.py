@@ -1,6 +1,8 @@
 import json
 import logging
+import os
 
+os.makedirs("../logs", exist_ok=True)
 logger_utils = logging.getLogger("utils")
 logger_utils.setLevel(logging.DEBUG)
 file_handler = logging.FileHandler("..\\logs\\utils.log", "w", encoding="utf-8")

@@ -1,5 +1,7 @@
 import logging
+import os
 
+os.makedirs("../logs", exist_ok=True)
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -45,6 +47,3 @@ def get_mask_account(account_number: str) -> str:
     else:
         masks_logger.error(error_message)
         raise TypeError(error_message)
-
-
-print(get_mask_card_number("1234123412341234"))
