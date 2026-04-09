@@ -14,7 +14,7 @@ def csv_data_upload(file_path: str) -> list[dict]:
 
         return csv_transactions_list
 
-    except Exception as e:
+    except Exception:
         csv_transactions_list = []
         return csv_transactions_list
 

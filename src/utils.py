@@ -20,7 +20,7 @@ def financial_transactions(path_source: str) -> list[dict]:
     try:
         with open(path_source, "r", encoding="utf-8") as file:
             transactions = json.load(file)
-            if type(transactions) == list and len(transactions) > 0:
+            if type(transactions) is list and len(transactions) > 0:
                 logger_utils.info("Список финансовых операций сформирован")
                 return transactions
             else:

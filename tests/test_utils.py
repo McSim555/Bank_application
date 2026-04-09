@@ -5,15 +5,11 @@ from unittest.mock import patch
 from src.utils import financial_transactions
 
 
-
 @patch("builtins.open", new_callable=mock.mock_open)  # Мокаем открытие файла
 def test_successful_load(mock_open):
     """Тест успешной загрузки данных"""
     # Создаем тестовые данные
-    test_data = [
-            {"id": 1, "amount": 100},
-            {"id": 2, "amount": 200}
-        ]
+    test_data = [{"id": 1, "amount": 100}, {"id": 2, "amount": 200}]
     mock_open.return_value.read.return_value = json.dumps(test_data)
 
     result = financial_transactions("test_path.json")
