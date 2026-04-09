@@ -11,7 +11,7 @@ file_handler.setFormatter(file_formatter)
 logger_utils.addHandler(file_handler)
 
 
-def financial_transactions(path_source)-> list[dict]:
+def financial_transactions(path_source: str) -> list[dict]:
     """Функцию принимает на вход путь до JSON-файла и возвращает список словарей с данными о финансовых транзакциях"""
 
     # path_source = input("Введите путь до файла с информацией о финансовых операциях:")

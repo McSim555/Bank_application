@@ -32,6 +32,7 @@ def conversion_to_rub(transaction: dict) -> float:
     else:
         raise ValueError("Конвертация такой валюты не предусмотрена")
 
+
 # r = conversion_to_rub({
 #         "id": 716496732,
 #         "state": "EXECUTED",
