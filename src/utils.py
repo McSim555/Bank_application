@@ -11,11 +11,11 @@ file_handler.setFormatter(file_formatter)
 logger_utils.addHandler(file_handler)
 
 
-def financial_transactions() -> list[dict]:
+def financial_transactions(path_source)-> list[dict]:
     """Функцию принимает на вход путь до JSON-файла и возвращает список словарей с данными о финансовых транзакциях"""
 
-    path_source = input("Введите путь до файла с информацией о финансовых операциях:")
-    logger_utils.info(f"Введен путь к файлу: {path_source}")
+    # path_source = input("Введите путь до файла с информацией о финансовых операциях:")
+    # logger_utils.info(f"Введен путь к файлу: {path_source}")
 
     try:
         with open(path_source, "r", encoding="utf-8") as file:
@@ -32,4 +32,4 @@ def financial_transactions() -> list[dict]:
         return []
 
 
-print(financial_transactions())
+# print(financial_transactions('../data/operations.json'))
