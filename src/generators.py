@@ -6,12 +6,19 @@ def filter_by_currency(transactions: list, currency_default: str = "USD") -> fil
 
     i = 0
     for tran in transactions:
+        # if (
+        #     tran is not None
+        #     and "code" in tran["operationAmount"]["currency"]
+        #     and tran["operationAmount"]["currency"]["code"] != ""
+        # ):
+        #     if tran["operationAmount"]["currency"]["code"] == currency_default:
+        #         i += 1
         if (
             tran is not None
-            and "code" in tran["operationAmount"]["currency"]
-            and tran["operationAmount"]["currency"]["code"] != ""
+            and "currency_code" in tran
+            and tran["currency_code"] != ""
         ):
-            if tran["operationAmount"]["currency"]["code"] == currency_default:
+            if tran["currency_code"] == currency_default:
                 i += 1
         else:
             raise KeyError("Отсутствует код валюты в введенных операциях или на входе пустые данные")
@@ -19,9 +26,7 @@ def filter_by_currency(transactions: list, currency_default: str = "USD") -> fil
     if i == 0:
         raise ValueError("Нет транзакций с искомым кодом валюты")
 
-    transactions_filtered = filter(
-        lambda x: x["operationAmount"]["currency"]["code"] == currency_default, transactions
-    )
+    transactions_filtered = filter(lambda x: x["currency_code"] == currency_default, transactions)
 
     return transactions_filtered
 

@@ -14,12 +14,12 @@ masks_logger = logging.getLogger("masks")
 
 
 def get_mask_card_number(card_number: str) -> str:
-    """Функция принмает нв вход номер карты и возвращает маску."""
+    """Функция принимает нв вход номер карты и возвращает маску."""
 
     masks_logger.info(f"Введен номер карты: {card_number}")
     error_message = "Номер карты должен состоять из 16 цифр"
     if card_number.isdigit():
-        if len(card_number) == 16:
+        if len(card_number)== 16:
             mask_card_number = card_number[:4] + " " + card_number[4:6] + "** **** " + card_number[-4:]
             masks_logger.info(f"Сформирована маска номера карты: {mask_card_number}")
             return mask_card_number
@@ -36,6 +36,7 @@ def get_mask_account(account_number: str) -> str:
 
     masks_logger.info(f"Введен номер счета: {account_number}")
     error_message = "Номер счета должен состоять из 20 цифр"
+    int(account_number)
     if account_number.isdigit():
         if len(account_number) == 20:
             mask_account_number = "**" + account_number[-4:]

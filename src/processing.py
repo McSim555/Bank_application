@@ -1,8 +1,8 @@
-def filter_by_state(operations_list: list, target_state: str = "EXECUTED") -> list:
+def filter_by_state(operations_list_1: list, target_state: str = "EXECUTED") -> list:
     """Функция принимает список словарей и возвращает новый список по ключу state"""
 
     new_operations_list = list()
-    for operation in operations_list:
+    for operation in operations_list_1:
         if "state" in operation:
             if operation["state"] == target_state:
                 # Новый список словарей по ключу
@@ -27,7 +27,7 @@ def sort_by_date(operation_dates: list, direction: bool = True) -> list:
             else:
                 raise ValueError("Отсутствует дата в одной или нескольких операциях")
         else:
-            raise KeyError("В одной или нескольких операциях отсутсвует дата")
+            raise KeyError("В одной или нескольких операциях отсутствует дата")
 
     # Сортировка списка
     new_operations_dates_final = sorted(new_operations_dates, key=lambda x: x["date"], reverse=direction)

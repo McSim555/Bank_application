@@ -20,16 +20,29 @@ def financial_transactions(path_source: str) -> list[dict]:
     try:
         with open(path_source, "r", encoding="utf-8") as file:
             transactions = json.load(file)
-            if type(transactions) is list and len(transactions) > 0:
-                logger_utils.info("Список финансовых операций сформирован")
-                return transactions
-            else:
-                logger_utils.info("Список пустой, так как исходный файл пустой или не является списком")
-                return []
+
+        # Удаление пустых транзакций из списка операций
+        for operation in transactions:
+            if operation == {}:
+                transactions.remove(operation)
+
+        if type(transactions) is list and len(transactions) > 0:
+            final_transactions = []
+            for operation in transactions:
+                operation['amount'] = operation['operationAmount']['amount']
+                operation['currency_name'] = operation['operationAmount']['currency']['name']
+                operation['currency_code'] = operation['operationAmount']['currency']['code']
+                del operation['operationAmount']
+                final_transactions.append(operation)
+            logger_utils.info("Список финансовых операций сформирован")
+            return final_transactions
+        else:
+            logger_utils.info("Список пустой, так как исходный файл пустой или не является списком")
+            return []
 
     except Exception as e:
         logger_utils.error(f"Произошла ошибка: {e}")
         return []
 
 
-# print(financial_transactions('../data/operations.json'))
+# print(financial_transactions("../data/operations.json"))
