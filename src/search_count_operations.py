@@ -1,5 +1,4 @@
 import re
-
 from collections import Counter
 
 
@@ -30,7 +29,6 @@ def process_bank_operations(data_operations: list[dict], operations_categories: 
             filtered_operations_count[key] = value
 
     return filtered_operations_count
-
 
 
 #

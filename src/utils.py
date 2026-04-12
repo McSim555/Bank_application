@@ -29,10 +29,10 @@ def financial_transactions(path_source: str) -> list[dict]:
         if type(transactions) is list and len(transactions) > 0:
             final_transactions = []
             for operation in transactions:
-                operation['amount'] = operation['operationAmount']['amount']
-                operation['currency_name'] = operation['operationAmount']['currency']['name']
-                operation['currency_code'] = operation['operationAmount']['currency']['code']
-                del operation['operationAmount']
+                operation["amount"] = operation["operationAmount"]["amount"]
+                operation["currency_name"] = operation["operationAmount"]["currency"]["name"]
+                operation["currency_code"] = operation["operationAmount"]["currency"]["code"]
+                del operation["operationAmount"]
                 final_transactions.append(operation)
             logger_utils.info("Список финансовых операций сформирован")
             return final_transactions

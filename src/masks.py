@@ -19,7 +19,7 @@ def get_mask_card_number(card_number: str) -> str:
     masks_logger.info(f"Введен номер карты: {card_number}")
     error_message = "Номер карты должен состоять из 16 цифр"
     if card_number.isdigit():
-        if len(card_number)== 16:
+        if len(card_number) == 16:
             mask_card_number = card_number[:4] + " " + card_number[4:6] + "** **** " + card_number[-4:]
             masks_logger.info(f"Сформирована маска номера карты: {mask_card_number}")
             return mask_card_number
