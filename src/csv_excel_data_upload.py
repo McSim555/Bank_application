@@ -27,9 +27,26 @@ def excel_data_upload(file_path: str) -> list[dict]:
 
     try:
         excel_data = pd.read_excel(file_path)
+        i = 0
+        for transaction in excel_data["from"].notnull():
+            if transaction is False:
+                excel_data.loc[i, "from"] = ""
+            i += 1
+
+        i = 0
+        for transaction in excel_data["id"].notnull():
+            if transaction is False:
+                excel_data = excel_data.dropna(subset=["id"])
+            i += 1
+
         excel_transactions_list = excel_data.to_dict(orient="records")
 
-        return excel_transactions_list
+        excel_transactions_list_new = []
+        for operation in excel_transactions_list:
+            operation["id"] = int(operation["id"])
+            excel_transactions_list_new.append(operation)
+
+        return excel_transactions_list_new
 
     except Exception:
         return []

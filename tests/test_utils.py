@@ -9,7 +9,10 @@ from src.utils import financial_transactions
 def test_successful_load(mock_open):
     """Тест успешной загрузки данных"""
     # Создаем тестовые данные
-    test_data = [{"id": 1, "amount": 100}, {"id": 2, "amount": 200}]
+    test_data = [
+        {"id": 1, "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}}},
+        {"id": 2, "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}}},
+    ]
     mock_open.return_value.read.return_value = json.dumps(test_data)
 
     result = financial_transactions("test_path.json")
@@ -17,7 +20,10 @@ def test_successful_load(mock_open):
     mock_open.assert_called_once_with("test_path.json", "r", encoding="utf-8")
     assert isinstance(result, list)
     assert len(result) == 2
-    assert result == test_data
+    assert result == [
+        {"id": 1, "amount": "31957.58", "currency_name": "руб.", "currency_code": "RUB"},
+        {"id": 2, "amount": "31957.58", "currency_name": "руб.", "currency_code": "RUB"},
+    ]
 
 
 @patch("builtins.open", new_callable=mock.mock_open)

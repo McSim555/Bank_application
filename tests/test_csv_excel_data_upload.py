@@ -1,4 +1,5 @@
 from unittest.mock import mock_open, patch
+
 import pandas as pd
 
 from src.csv_excel_data_upload import csv_data_upload, excel_data_upload  # замените на реальный импорт
@@ -36,9 +37,14 @@ def test_csv_data_upload_no_file():
 @patch("pandas.read_excel")
 def test_excel_data_upload_success(mock_read_excel):
     """Тест нормальной обработки Excel файла"""
-    mock_read_excel.return_value = pd.DataFrame({"id": [1, 2], "amount": [100, 200], "comment": ["test", "another"]})
+    mock_read_excel.return_value = pd.DataFrame(
+        {"id": [1, 2], "amount": [100, 200], "comment": ["test", "another"], "from": ["M 1", ""]}
+    )
     result = excel_data_upload("fake_path.xlsx")
-    expected = [{"id": 1, "amount": 100, "comment": "test"}, {"id": 2, "amount": 200, "comment": "another"}]
+    expected = [
+        {"id": 1, "amount": 100, "comment": "test", "from": "M 1"},
+        {"id": 2, "amount": 200, "comment": "another", "from": ""},
+    ]
     assert result == expected
 
 
