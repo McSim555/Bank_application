@@ -36,7 +36,7 @@ def get_mask_account(account_number: str) -> str:
 
     masks_logger.info(f"Введен номер счета: {account_number}")
     error_message = "Номер счета должен состоять из 20 цифр"
-    int(account_number)
+    # int(account_number)
     if account_number.isdigit():
         if len(account_number) == 20:
             mask_account_number = "**" + account_number[-4:]

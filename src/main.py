@@ -1,19 +1,21 @@
-from csv_excel_data_upload import csv_data_upload, excel_data_upload
-from generators import filter_by_currency
-from processing import filter_by_state, sort_by_date
-from search_count_operations import process_bank_search
-from utils import financial_transactions
-from widget import get_date, mask_account_card
+from src.csv_excel_data_upload import csv_data_upload, excel_data_upload
+from src.generators import filter_by_currency
+from src.processing import filter_by_state, sort_by_date
+from src.search_count_operations import process_bank_search
+from src.utils import financial_transactions
+from src.widget import get_date, mask_account_card
 
 
-def main()->None:
+def main() -> list[dict]:
     """Функция отвечает за основную логику проекта и связывает функциональности между собой"""
 
     # Выбор файла с банковскими транзакциями из директории data
     i = 0
     while i < 1:
         customer_choice = input(
-            "Привет! Добро пожаловать в программу работы с банковскими транзакциями. Выберите необходимый пункт меню:\n1. Получить информацию о транзакциях из JSON-файла\n2. Получить информацию о транзакциях из CSV-файла\n3. Получить информацию о транзакциях из XLSX-файла\n"
+            "Привет! Добро пожаловать в программу работы с банковскими транзакциями. Выберите необходимый пункт "
+            "меню:\n1. Получить информацию о транзакциях из JSON-файла\n"
+            "2. Получить информацию о транзакциях из CSV-файла\n3. Получить информацию о транзакциях из XLSX-файла\n"
         )
 
         if customer_choice == "1":
@@ -32,15 +34,19 @@ def main()->None:
             print("Некорректный ввод. Сделайте выбор, введя цифру 1 - 3")
 
     # Удаление пустых транзакций из списка операций
-    for operation in operations_list:
-        if operation == {}:
-            operations_list.remove(operation)
+    operations_list_new = [operation for operation in operations_list if operation != ""]
+    # for operation in operations_list:
+    #     if operation != {}:
+    #         operations_list_new.append(operation)
+
+    operations_list = operations_list_new
 
     # Выбор статуса операции
     k = 0
     while k < 1:
         status_choice_customer = input(
-            "Введите статус, по которому необходимо выполнить фильтрацию.\nДоступные для фильтровки статусы: EXECUTED, CANCELED, PENDING\n"
+            "Введите статус, по которому необходимо выполнить фильтрацию.\nДоступные для фильтровки статусы: "
+            "EXECUTED, CANCELED, PENDING\n"
         )
         status_choice = status_choice_customer.upper()
         if status_choice == "EXECUTED" or status_choice == "CANCELED" or status_choice == "PENDING":
@@ -93,9 +99,7 @@ def main()->None:
         key_word_choice = input("Отфильтровать список транзакций по определенному слову в описании? Да/Нет\n").upper()
         if key_word_choice == "ДА":
             kkk += 1
-            key_word = input(
-                'Введите описание искомых транзакций, например, "Перевод с карты на карту", "Перевод со счета на счет", "Открытие вклада", ... \n'
-            )
+            key_word = input("Введите описание искомых транзакций\n")
             operations_list = process_bank_search(operations_list, key_word)
         elif key_word_choice == "НЕТ":
             kkk += 1
@@ -103,10 +107,11 @@ def main()->None:
         else:
             print(f'Вы написали {key_word_choice}. Выберите "да" или "нет"')
 
+    length = len(operations_list)
     print("Распечатываю итоговый список транзакций...")
-    print(f"Всего банковских операций в выборке: {len(list(operations_list))}\n")
+    print(f"Всего банковских операций в выборке: {length}\n")
 
-    if len(list(operations_list)) == 0:
+    if length == 0:
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
 
     else:
@@ -116,15 +121,21 @@ def main()->None:
                 account_from = mask_account_card(operation["from"])
                 account_to = mask_account_card(operation["to"])
                 print(
-                    f'{date} {operation["description"]}\n{account_from} -> {account_to}\nСумма: {operation["amount"]} {operation['currency_name']}\n'
+                    f'{date} {operation["description"]}\n{account_from} -> {account_to}\nСумма: {operation["amount"]} '
+                    f"{operation['currency_name']}\n"
                 )
 
             else:
                 date = get_date(operation["date"])
+
                 account_to = mask_account_card(operation["to"])
+
                 print(
-                    f'{date} {operation["description"]}\n{account_to}\nСумма: {operation["amount"]} {operation['currency_name']}\n'
+                    f'{date} {operation["description"]}\n{account_to}\nСумма: {operation["amount"]} '
+                    f"{operation['currency_name']}\n"
                 )
 
+    return operations_list
 
-main()
+
+# main()

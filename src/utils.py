@@ -22,9 +22,12 @@ def financial_transactions(path_source: str) -> list[dict]:
             transactions = json.load(file)
 
         # Удаление пустых транзакций из списка операций
-        for operation in transactions:
-            if operation == {}:
-                transactions.remove(operation)
+        transactions_new = [operation for operation in transactions if operation != {}]
+        transactions = transactions_new
+
+        # for operation in transactions:
+        #     if operation == {}:
+        #         transactions.remove(operation)
 
         if type(transactions) is list and len(transactions) > 0:
             final_transactions = []

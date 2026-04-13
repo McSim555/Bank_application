@@ -1,18 +1,11 @@
 from typing import Generator
 
 
-def filter_by_currency(transactions: list, currency_default: str = "USD") -> filter:
+def filter_by_currency(transactions: list, currency_default: str = "USD") -> list:
     """Функция фильтрует транзакции по валюте"""
 
     i = 0
     for tran in transactions:
-        # if (
-        #     tran is not None
-        #     and "code" in tran["operationAmount"]["currency"]
-        #     and tran["operationAmount"]["currency"]["code"] != ""
-        # ):
-        #     if tran["operationAmount"]["currency"]["code"] == currency_default:
-        #         i += 1
         if tran is not None and "currency_code" in tran and tran["currency_code"] != "":
             if tran["currency_code"] == currency_default:
                 i += 1
@@ -22,7 +15,7 @@ def filter_by_currency(transactions: list, currency_default: str = "USD") -> fil
     # if i == 0:
     #     raise ValueError("Нет транзакций с искомым кодом валюты")
 
-    transactions_filtered = filter(lambda x: x["currency_code"] == currency_default, transactions)
+    transactions_filtered = list(filter(lambda x: x["currency_code"] == currency_default, transactions))
 
     return transactions_filtered
 
